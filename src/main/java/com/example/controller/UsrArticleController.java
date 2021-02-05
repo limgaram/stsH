@@ -52,7 +52,12 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
+	public ResultData doDelete(Integer id) {
+
+		if (id == null) {
+			return new ResultData("F-1", "id를 입력해주세요.");
+		}
+
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
@@ -64,8 +69,17 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData doModify(Integer id, String title, String body) {
 
+		if (id == null) {
+			return new ResultData("F-1", "id를 입력해주세요.");
+		}
+		if (title == null) {
+			return new ResultData("F-1", "title를 입력해주세요.");
+		}
+		if (body == null) {
+			return new ResultData("F-1", "body를 입력해주세요.");
+		}
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
