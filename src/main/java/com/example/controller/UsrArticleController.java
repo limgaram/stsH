@@ -32,8 +32,17 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/list")
 	@ResponseBody
-	public List<Article> showList() {
-		return articleService.getArticles();
+	public List<Article> showList(String searchKeyword) {
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			// searchKeyword가 비어있지 않은데 길이가 0이면 null로 판단
+			searchKeyword = null;
+		}
+		if (searchKeyword != null) {
+			// searchKeyword가 들어왔을 때, 공백값은 없애주고 searchKeyword값만
+			searchKeyword = searchKeyword.trim();
+		}
+
+		return articleService.getArticles(searchKeyword);
 	}
 
 	@RequestMapping("usr/article/doAdd")
