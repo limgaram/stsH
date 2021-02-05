@@ -45,13 +45,9 @@ public class UsrArticleController {
 		String updateDate = regDate;
 		articles.add(new Article(++articleLastId, regDate, updateDate, title, body));
 
-		Map<String, Object> rs = new HashMap<>();
-		rs.put("resultCode", "S-1");
-		rs.put("msg", "성공하였습니다.");
 		// articleLastId(+1된 id)를 추가된 게시물 번호로 씀
-		rs.put("id", articleLastId);
 
-		return rs;
+		return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", articleLastId);
 	}
 
 	@RequestMapping("usr/article/doDelete")
@@ -61,17 +57,12 @@ public class UsrArticleController {
 
 		Map<String, Object> rs = new HashMap<>();
 
-		if (deleteArticleRs) {
-			rs.put("resultCode", "S-1");
-			rs.put("msg", "성공하였습니다.");
-		} else {
-			rs.put("resultCode", "F-1");
-			rs.put("msg", "해당 게시물은 존재하지 않습니다.");
+		if (deleteArticleRs == false) {
+			return Util.mapOf("resultCode", "F-1", "msg", "해당 게시물은 존재하지 않습니다.");
 		}
 		// 받아온 id가 삭제되는 id
-		rs.put("id", id);
 
-		return rs;
+		return Util.mapOf("resultCode", "S-1", "msg", "성공하였습니다.", "id", id);
 	}
 
 	private boolean deleteArticle(int id) {
@@ -99,19 +90,14 @@ public class UsrArticleController {
 		Map<String, Object> rs = new HashMap<>();
 
 		if (selArticle == null) {
-			rs.put("resultCode", "F-1");
-			rs.put("msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
+			return Util.mapOf("resultCode", "F-1", "msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
 		}
 
 		selArticle.setUpdateDate(Util.getNowDateStr());
 		selArticle.setTitle(title);
 		selArticle.setBody(body);
 
-		rs.put("resultCode", "S-1");
-		rs.put("msg", String.format("%d번 게시물이 수정되었습니다.", id));
-		rs.put("id", id);
-
-		return rs;
+		return Util.mapOf("resultCode", "S-1", "msg", String.format("%d번 게시물이 수정되었습니다.", id), "id", id);
 	}
 
 }
