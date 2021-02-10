@@ -32,7 +32,15 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/list")
 	@ResponseBody
-	public List<Article> showList(String searchKeyword) {
+	public List<Article> showList(String searchKeywordType, String searchKeyword) {
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
+		}
+
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "titleAndBody";
+		}
+
 		if (searchKeyword != null && searchKeyword.length() == 0) {
 			// searchKeyword가 비어있지 않은데 길이가 0이면 null로 판단
 			searchKeyword = null;
@@ -42,7 +50,7 @@ public class UsrArticleController {
 			searchKeyword = searchKeyword.trim();
 		}
 
-		return articleService.getArticles(searchKeyword);
+		return articleService.getArticles(searchKeywordType, searchKeyword);
 	}
 
 	@RequestMapping("usr/article/doAdd")
