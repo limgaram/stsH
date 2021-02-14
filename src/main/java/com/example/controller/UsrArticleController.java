@@ -64,7 +64,7 @@ public class UsrArticleController {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
-		return articleService.add(title, body);
+		return articleService.addArticle(title, body);
 	}
 
 	@RequestMapping("usr/article/doDelete")
@@ -103,7 +103,7 @@ public class UsrArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		return articleService.modify(id, title, body);
+		return articleService.modifyArticle(id, title, body);
 	}
 
 }
