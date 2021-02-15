@@ -48,6 +48,10 @@ public class UsrArticleController {
 			searchKeyword = searchKeyword.trim();
 		}
 
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
+
 		return articleService.getArticles(searchKeywordType, searchKeyword);
 	}
 
