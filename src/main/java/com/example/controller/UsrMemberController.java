@@ -99,4 +99,25 @@ public class UsrMemberController {
 
 		return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
+
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return new ResultData("F-1", "로그인 후 이용해주세요.");
+		}
+
+		if (param.isEmpty()) {
+			return new ResultData("F-2", "수정할 정보를 입력해주세요.");
+		}
+
+		// 로그인된 회원 아이디는 세션에 저장된 로그인 아이디이다
+		// param에 로그인된 회원 아이디를 id로 넣는다
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		param.put("id", loginedMemberId);
+
+		// 수정해야 할 정보가 담긴 param을 회원 서비스에 있는 회원수정으로 넘긴다
+		return memberService.modifyMember(param);
+	}
 }
