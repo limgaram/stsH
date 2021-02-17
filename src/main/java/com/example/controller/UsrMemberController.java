@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.dto.Member;
 import com.example.dto.ResultData;
 import com.example.service.MemberService;
-import com.sun.net.httpserver.Authenticator.Result;
 
 @Controller
 public class UsrMemberController {
@@ -88,5 +87,16 @@ public class UsrMemberController {
 		session.setAttribute("loginedMemberId", existingMember.getId());
 
 		return new ResultData("S-1", String.format("%s님 환영합니다.", existingMember.getNickname()));
+	}
+
+	@RequestMapping("/usr/member/logout")
+	@ResponseBody
+	public ResultData doLogout(HttpSession session) {
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return new ResultData("S-2", "이미 로그아웃 되었습니다.");
+		}
+
+		return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
 }
