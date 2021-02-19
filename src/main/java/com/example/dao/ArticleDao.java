@@ -22,4 +22,6 @@ public interface ArticleDao {
 
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
+	public Article getForPrintArticle(@Param("id") int id);
+
 }

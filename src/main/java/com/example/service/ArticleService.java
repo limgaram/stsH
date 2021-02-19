@@ -68,4 +68,8 @@ public class ArticleService {
 		return getActorCanModifyRd(article, actorId);
 	}
 
+	public Article getForPrintArticle(Integer id) {
+		return articleDao.getForPrintArticle(id);
+	}
+
 }
